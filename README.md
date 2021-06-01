@@ -32,6 +32,9 @@
 
 ```bash
 $ npm install
+
+# install and configure husky
+$ npm run prepare
 ```
 
 ## Running the app
