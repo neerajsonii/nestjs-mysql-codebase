@@ -8,7 +8,7 @@
         "typescript",
         "template",
         "nestJs"
-      ],
+    ],
     "scripts": {
         "build": "tsc",
         "start:debug": "nodemon",
@@ -33,7 +33,7 @@
         "test:e2e": "jest --config ./test/jest-e2e.json",
         "prettier": "./node_modules/prettier/bin-prettier.js --debug-check \"{,!(node_modules|dist|build|coverage)/**/}*.{js,jsx,ts,tsx,json}\"",
         "prettier:fix": "./node_modules/prettier/bin-prettier.js --write \"{,!(node_modules|dist|build|coverage)/**/}*.{js,jsx,ts,tsx,json}\"",
-        "pretty-quick":"npm run pretty-quick"
+        "pretty-quick": "pretty-quick"
     },
     "dependencies": {
         "@nestjs/common": "^7.0.0",
