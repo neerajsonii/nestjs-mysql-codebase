@@ -1,0 +1,15 @@
+{
+    "defaultSeverity": "error",
+    "extends": ["tslint:recommended", "tslint-config-prettier", "tslint-etc"],
+    "jsRules": {},
+    "rules": {
+        "no-console": [true, "warn"],
+        "no-unused-declaration": true,
+        "no-unused-expression": true,
+        "no-empty": false,
+        "quotemark": [true, "single"],
+        "object-literal-sort-keys": false,
+        "max-classes-per-file": [false, 5, "exclude-class-expressions"]
+    },
+    "rulesDirectory": []
+}
