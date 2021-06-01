@@ -47,6 +47,56 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Migrations
+
+```bash
+# generate migration
+$ npm run migration:generate -- --name=<file-name> 
+(it will generate a migration file in `/src/app/database/migrations` folder 
+ with name something like `timestamp-<filename>.js`)
+
+# run migration
+$ npm run migration:run
+(it will run all the new migrations)
+
+# undo latest migration
+$ npm run migration:undo:latest
+(it will undo the very latest migration in database)
+
+# undo all migration
+$ npm run migration:undo:all
+(it will undo all the migrations in database)
+```
+
+## Seeders
+
+```bash
+# generate seed
+$ npm run seeds:generate -- --name=<file-name> 
+(it will generate a seeds file in `/src/app/database/seeders` folder 
+ with name something like `timestamp-<filename>.js`)
+
+# run seeds
+$ npm run seeds:run
+(it will run all the new seeds)
+
+# undo latest seeds
+$ npm run seeds:undo:latest
+(it will undo the very latest seed in database)
+
+# undo all seeds
+$ npm run seeds:undo:all
+(it will undo all the seeds in database)
+```
+
+## Lint
+
+```bash
+# fix lints
+$ npm run lint:fix
+(it will fix all the lints as per rules in `tslint.json` you can add or modify the rules accordingly)
+```
+
 ## Test
 
 ```bash
