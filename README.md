@@ -47,6 +47,10 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Swagger api-doc
+
+api-doc - (http://localhost:3000/api-docs)
+
 ## Migrations
 
 ```bash

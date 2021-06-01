@@ -4,6 +4,11 @@
     "description": "",
     "author": "Neeraj Soni",
     "license": "UNLICENSED",
+    "keywords": [
+        "typescript",
+        "template",
+        "nestJs"
+      ],
     "scripts": {
         "build": "tsc",
         "start:debug": "nodemon",
@@ -27,7 +32,8 @@
         "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
         "test:e2e": "jest --config ./test/jest-e2e.json",
         "prettier": "./node_modules/prettier/bin-prettier.js --debug-check \"{,!(node_modules|dist|build|coverage)/**/}*.{js,jsx,ts,tsx,json}\"",
-        "prettier:fix": "./node_modules/prettier/bin-prettier.js --write \"{,!(node_modules|dist|build|coverage)/**/}*.{js,jsx,ts,tsx,json}\""
+        "prettier:fix": "./node_modules/prettier/bin-prettier.js --write \"{,!(node_modules|dist|build|coverage)/**/}*.{js,jsx,ts,tsx,json}\"",
+        "pretty-quick":"npm run pretty-quick"
     },
     "dependencies": {
         "@nestjs/common": "^7.0.0",
