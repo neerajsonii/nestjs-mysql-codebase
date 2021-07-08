@@ -3,19 +3,28 @@
     All other external services or classes should be injected here.
 */
 
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, OnModuleInit } from '@nestjs/common';
+import { LoggerService } from '../../../shared/services/logger.service';
 import { ProductRepository } from '../datasource/dao/product.repository';
 import { Product } from '../interfaces/product.interface';
 
+const TOKEN = 'PRODUCT_SERVICE';
 @Injectable()
-export class ProductService {
-    constructor(private productRepo: ProductRepository) {}
+export class ProductService implements OnModuleInit {
+    private readonly logger: LoggerService;
+    constructor(private productRepo: ProductRepository) {
+        this.logger = new LoggerService(TOKEN);
+    }
+    
+    onModuleInit() {
+        // do something here on loading this service.
+    }
 
     public async getProducts(): Promise<Product[]> {
         try {
             return this.productRepo.findAll();
         } catch (error) {
-            console.log(`Error on getProducts :: ${error.message}`);
+            this.logger.error(`Error on getProducts :: ${error.message}`);
             throw error;
         }
     }
@@ -28,6 +37,7 @@ export class ProductService {
             }
             return product;
         } catch (error) {
+            this.logger.error(`Error on getProduct :: ${error.message}`);
             this.handleInternalError(error);
         }
     }
@@ -40,6 +50,7 @@ export class ProductService {
             }
             return product;
         } catch (error) {
+            this.logger.error(`Error on removeProduct :: ${error.message}`);
             this.handleInternalError(error);
         }
     }
@@ -49,12 +60,12 @@ export class ProductService {
             await this.productRepo.create(product);
             return { message: 'Product created.' };
         } catch (error) {
+            this.logger.error(`Error on addProducts :: ${error.message}`);
             this.handleInternalError(error);
         }
     }
 
     private handleInternalError(error: Error) {
-        console.log(`Internal Server Error:  ${error.message}`);
         throw error;
     }
 }

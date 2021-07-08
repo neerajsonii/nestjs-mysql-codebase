@@ -1,17 +1,7 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-echo '## Running code fix...'
-npm run pretty-quick
-echo '## code fix done'
+echo '## Running linting...'
+npm run lint
+echo '## Lint check done'
 echo ' ------------- '
-
-echo '## Running lint fix...'
-npm run lint:fix
-echo '## Lint fix done'
-echo ' ------------- '
-
-echo '## Adding changes'
-git add -A .
-
-echo '## adding changes done'

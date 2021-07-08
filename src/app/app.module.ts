@@ -1,6 +1,6 @@
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { ProductModule } from './modules/product/product.module';
-import { LoggerMiddleware } from '../app/shared/middlewares/logger.middleware';
+import { ProductMiddleware } from '../app/shared/middlewares/product.middleware';
 import { AppController } from './app.controller';
 import { ConfigModule } from '@nestjs/config';
 import { SharedModule } from './shared/shared.module';
@@ -18,6 +18,6 @@ import { DataBaseModule } from './database/database.module';
 })
 export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
-        consumer.apply(LoggerMiddleware).forRoutes('*');
+        consumer.apply(ProductMiddleware).forRoutes('*');
     }
 }

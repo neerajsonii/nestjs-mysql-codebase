@@ -1,11 +1,15 @@
-import { Module, OnModuleInit } from '@nestjs/common';
+import { Logger, Module, OnModuleInit } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { SequelizeOptions } from 'sequelize-typescript';
 import { Dialect } from 'sequelize/types';
 import { AppConfigModule as ConfigModule } from '../../config/config.module';
 import { ConfigService } from '../../config/config.service';
 import { Product } from '../modules/product/datasource/models/product.model';
+import { LoggerService } from '../shared/services/logger.service';
 
+const TOKEN = 'DATABASE_MODULE';
+
+const logger = new Logger('QUERY');
 @Module({
     imports: [
         SequelizeModule.forRootAsync({
@@ -19,7 +23,13 @@ import { Product } from '../modules/product/datasource/models/product.model';
                 password: configService.get().databaseConfig.password,
                 database: configService.get().databaseConfig.database,
                 models: [Product],
-                logQueryParameters: true,
+                pool: {
+                    max: 5,
+                },
+                logQueryParameters: false, // making it true will log the query params in the console.
+                logging: (rawQuery: string) => {
+                    logger.log(rawQuery);
+                },
                 define: {
                     paranoid: true,
                     freezeTableName: true,
@@ -36,7 +46,12 @@ import { Product } from '../modules/product/datasource/models/product.model';
     providers: [],
 })
 export class DataBaseModule implements OnModuleInit {
+    private readonly logger: LoggerService;
+    constructor() {
+        this.logger = new LoggerService(TOKEN);
+    }
+
     onModuleInit() {
-        console.log('DataBaseModule initiated...');
+        this.logger.log('Module initiated and ready');
     }
 }

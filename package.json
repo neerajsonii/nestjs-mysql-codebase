@@ -1,5 +1,5 @@
 {
-    "name": "first-project",
+    "name": "nestjs-mysql-codebase",
     "version": "0.0.1",
     "description": "",
     "author": "Neeraj Soni",
@@ -13,9 +13,6 @@
         "build": "tsc",
         "start:debug": "nodemon",
         "start": "ts-node ./src/main.ts",
-        "start:local": "NODE_ENV=local npm run start",
-        "start:dev": "NODE_ENV=dev npm run start",
-        "start:prod": "NODE_ENV=prod npm run start",
         "migration:run": "node_modules/.bin/sequelize db:migrate",
         "migration:generate": "sequelize-cli migration:generate",
         "migration:undo:latest": "sequelize-cli db:migrate:undo",

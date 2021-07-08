@@ -35,9 +35,7 @@ export class CreateProductPayloadData implements Product {
     url: string;
 }
 
-export class CreateProductPayload extends GenericPayload<
-    CreateProductPayloadData
-> {
+export class CreateProductPayload extends GenericPayload<CreateProductPayloadData> {
     @ApiProperty({ description: 'Create Product payload' })
     @ValidateType(() => CreateProductPayloadData)
     public data!: CreateProductPayloadData;

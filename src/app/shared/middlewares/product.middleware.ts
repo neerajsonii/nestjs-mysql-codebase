@@ -2,9 +2,8 @@ import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 
 @Injectable()
-export class LoggerMiddleware implements NestMiddleware {
+export class ProductMiddleware implements NestMiddleware {
     use(req: Request, res: Response, next: NextFunction) {
-        // console.log('Its a class based logger middleware');
         // logger logic here
         next();
     }
@@ -16,6 +15,5 @@ export function functionalLogger(
     res: Response,
     next: NextFunction
 ) {
-    console.log('Its a function based logger middleware');
     next();
 }

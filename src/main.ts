@@ -4,40 +4,42 @@ import * as helmet from 'helmet';
 import * as rateLimit from 'express-rate-limit';
 import * as compression from 'compression';
 import { SwaggerModule, OpenAPIObject } from '@nestjs/swagger';
-import { INestApplication } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
 import { setUpSwagger } from './swagger.config';
 import { ConfigService } from './config/config.service';
 import { Config } from './config/config.interface';
+import { INestApplication, NestApplicationOptions } from '@nestjs/common';
+import { ResponseTransformInterceptor } from './app/shared/interceptors/response.interceptors';
+import { LoggerService } from './app/shared/services/logger.service';
+
+const NEST_LOGGING = process.env.ENABLE_LOGGING;
 
 async function configSwagger(app: INestApplication): Promise<OpenAPIObject> {
     return setUpSwagger(app);
 }
 
 async function bootstrap() {
-    const app: INestApplication = await NestFactory.create(AppModule);
-    const configService = app.get(ConfigService);
+    const opts: NestApplicationOptions = {};
+    if (!NEST_LOGGING) { opts.logger = false; }
+    const app: INestApplication = await NestFactory.create<INestApplication>(AppModule, opts);
+    app.useGlobalInterceptors(new ResponseTransformInterceptor());
+    const config: Config = app.get(ConfigService).get();
     app.use(helmet());
     app.use(compression());
     app.use(cookieParser());
     app.enableCors();
-    if (configService.get().enableRateLimit) {
-        app.use(
-            rateLimit({
-                windowMs: 15 * 60 * 1000, // 15 minutes
-                max: 100, // limit each IP to 100 requests per windowMs
-                message: 'Too much requests, seems like a DDOS attack',
-            })
-        );
+    if (config.enableRateLimit) {
+        app.use(rateLimit({
+            windowMs: 15 * 60 * 1000, // 15 minutes
+            max: 100, // limit each IP to 100 requests per windowMs
+            message: 'Too much requests, seems like a DDOS attack',
+        }));
     }
-    if (configService.get().enableSwagger) {
+    if (config.enableSwagger) {
         const document: OpenAPIObject = await configSwagger(app);
         SwaggerModule.setup('api-docs', app, document);
     }
-    await app.listen(configService.get().port);
-    const config: Config = configService.get();
-    console.log(
-        `Application :: ${config.appName} is running and pointing to => ${config.env}`
-    );
+    await app.listen(config.port);
+    new LoggerService('APP').log(`Application :: ${config.appName} is running and pointing to => ${config.env}`);
 }
 bootstrap();

@@ -10,10 +10,7 @@ export const setUpSwagger = (app: INestApplication) => {
         .setDescription('Server description')
         .setVersion('1.0')
         .setLicense('NestJs Docs', 'https://docs.nestjs.com/')
-        // .setContact('Neeraj Soni', 'https://docs.nestjs.com/', 'iamneerajsonii@gmail.com')
-        // .addServer('http://localhost:3000', 'Local-Dev')
-        // .addServer('http://localhost:4000', 'Qa')
-        .setBasePath(`http://localhost:${appConfig.port}`)
+        .setContact('Neeraj Soni', 'https://github.com/neerajsonii', 'iamneerajsonii@gmail.com')
         .build();
     return SwaggerModule.createDocument(app, options);
 };

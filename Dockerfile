@@ -1,4 +1,6 @@
-FROM node:12-buster-slim
+ARG NODE_VERSION
+
+FROM node:${NODE_VERSION}
 
 WORKDIR /app
 
@@ -10,8 +12,6 @@ RUN npm install -g nodemon
 
 RUN npm install
 
-RUN npm run build
-
 EXPOSE 3000
 
-CMD npm run start:debug
+CMD npm run start
