@@ -11,7 +11,7 @@ import { Product } from '../models/product.model';
 
 @Injectable()
 export class ProductRepository {
-    constructor(@Inject(Product) private readonly product: typeof Product) {}
+    constructor(@Inject(Product) private readonly product: typeof Product) { }
 
     public async findAll(): Promise<Product[]> {
         return this.product.findAll();
@@ -43,7 +43,13 @@ export class ProductRepository {
         return this.product.count(query);
     }
 
-    public async delete(where: object): Promise<any> {
-        return this.product.destroy({ where });
+    public async delete(id: number): Promise<any> {
+        return this.product.destroy({
+            where: {
+                id: {
+                    [Op.eq]: id
+                }
+            }
+        });
     }
 }

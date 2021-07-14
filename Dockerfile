@@ -1,6 +1,4 @@
-ARG NODE_VERSION
-
-FROM node:${NODE_VERSION}
+FROM node:lts-alpine
 
 WORKDIR /app
 

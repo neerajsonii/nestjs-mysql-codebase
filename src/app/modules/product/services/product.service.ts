@@ -44,7 +44,7 @@ export class ProductService implements OnModuleInit {
 
     public async removeProduct(id: number): Promise<Product> {
         try {
-            const product = await this.productRepo.delete({ id });
+            const product = await this.productRepo.delete(id);
             if (!product) {
                 throw new NotFoundException('Product not found');
             }

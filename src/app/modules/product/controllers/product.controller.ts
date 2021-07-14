@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Body, UsePipes, ValidationPipe, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, UsePipes, ValidationPipe, Param, Delete, UseGuards, SetMetadata } from '@nestjs/common';
 import { CreateProductPayload, DeleteProductParams, GetProductParams } from '../dto/product.dto';
 import { ApiBadRequestResponse, ApiCreatedResponse, ApiForbiddenResponse, 
     ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { ProductService } from '../services/product.service';
 import { Product } from '../interfaces/product.interface';
+import { AuthGuard } from '../../../shared/guards/auth.guard';
+import { Roles } from '../../../shared/decorator';
 
 @ApiTags('Product')
 @Controller('product')
@@ -19,6 +21,11 @@ export class ProductController {
         return this.productService.getProduct(param.id);
     };
 
+    /* 
+        Delete route requires valid auth token and must be an admin
+    */
+    @UseGuards(AuthGuard)
+    @Roles(['admin']) // allowed roles
     @Delete(':id')
     @ApiOkResponse({ description: 'Record deleted successfully' })
     @ApiForbiddenResponse({ description: 'Forbidden.' })

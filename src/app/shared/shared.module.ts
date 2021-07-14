@@ -1,15 +1,14 @@
 import { Module, OnModuleInit } from '@nestjs/common';
-import { AppConfigModule as ConfigModule } from '../../config/config.module';
-import { PipeModule } from './pipes/pipe.module';
+import { ConfigModule } from '@nestjs/config';
 import { LoggerService } from './services/logger.service';
 
 const TOKEN = 'SHARED_MODULE';
 
 @Module({
-    imports: [ConfigModule, PipeModule],
+    imports: [ConfigModule],
     controllers: [],
     providers: [],
-    exports: [ConfigModule, PipeModule],
+    exports: [ConfigModule],
 })
 export class SharedModule implements OnModuleInit {
     private readonly logger: LoggerService;

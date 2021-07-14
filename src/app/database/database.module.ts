@@ -1,9 +1,9 @@
 import { Logger, Module, OnModuleInit } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { SequelizeOptions } from 'sequelize-typescript';
 import { Dialect } from 'sequelize/types';
-import { AppConfigModule as ConfigModule } from '../../config/config.module';
-import { ConfigService } from '../../config/config.service';
+import { config } from '../config/config';
 import { Product } from '../modules/product/datasource/models/product.model';
 import { LoggerService } from '../shared/services/logger.service';
 
@@ -14,14 +14,13 @@ const logger = new Logger('QUERY');
     imports: [
         SequelizeModule.forRootAsync({
             imports: [ConfigModule],
-            inject: [ConfigService],
-            useFactory: (configService: ConfigService): SequelizeOptions => ({
-                dialect: configService.get().databaseConfig.dialect as Dialect,
-                host: configService.get().databaseConfig.host,
-                port: +configService.get().databaseConfig.port,
-                username: configService.get().databaseConfig.username,
-                password: configService.get().databaseConfig.password,
-                database: configService.get().databaseConfig.database,
+            useFactory: (): SequelizeOptions => ({
+                dialect: config().databaseConfig.dialect as Dialect,
+                host: config().databaseConfig.host,
+                port: +config().databaseConfig.port,
+                username: config().databaseConfig.username,
+                password: config().databaseConfig.password,
+                database: config().databaseConfig.database,
                 models: [Product],
                 pool: {
                     max: 5,
