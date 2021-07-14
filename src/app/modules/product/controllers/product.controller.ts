@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, UsePipes, ValidationPipe, Param, Delete, UseGuards, SetMetadata } from '@nestjs/common';
+import { Controller, Get, Post, Body, UsePipes, ValidationPipe, Param, Delete, UseGuards } from '@nestjs/common';
 import { CreateProductPayload, DeleteProductParams, GetProductParams } from '../dto/product.dto';
 import { ApiBadRequestResponse, ApiCreatedResponse, ApiForbiddenResponse, 
     ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
