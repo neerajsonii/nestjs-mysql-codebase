@@ -6,7 +6,7 @@ import { SharedModule } from './shared/shared.module';
 import { DataBaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
 import { config } from './config/config';
-import { ScheduleModule } from '@nestjs/schedule';
+import { CronJobModule } from './jobs/jobs.module';
 
 @Module({
     imports: [
@@ -17,7 +17,7 @@ import { ScheduleModule } from '@nestjs/schedule';
         DataBaseModule,
         SharedModule,
         ProductModule,
-        ScheduleModule.forRoot()
+        CronJobModule
     ],
     controllers: [AppController],
     providers: [],

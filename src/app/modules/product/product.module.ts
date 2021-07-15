@@ -1,6 +1,5 @@
 import { Module, OnModuleInit, Provider } from '@nestjs/common';
 import { DataBaseModule } from '../../database/database.module';
-import { ProductCronJobService } from '../../jobs/product.cron.job';
 import { LoggerService } from '../../shared/services/logger.service';
 import { SharedModule } from '../../shared/shared.module';
 import { ProductController } from './controllers/product.controller';
@@ -18,14 +17,10 @@ const productProviders: Provider[] = [
     },
 ];
 
-const productCronJobs: Provider[] = [
-    ProductCronJobService
-];
-
 @Module({
     imports: [SharedModule, DataBaseModule],
     controllers: [ProductController],
-    providers: [ProductService, ProductRepository, ...productProviders, ...productCronJobs ],
+    providers: [ProductService, ProductRepository, ...productProviders],
     exports: [ProductService],
 })
 export class ProductModule implements OnModuleInit {

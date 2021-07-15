@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { ProductService } from '../modules/product/services/product.service';
-import { CRON_EXPRESSION } from '../shared/job.enums';
+import { CRON_EXPRESSION } from './jobs.enums';
 import { LoggerService } from '../shared/services/logger.service';
 
-const TOKEN = 'PRODUCT CRON';
+const TOKEN = 'PRODUCT_CRON';
 
 @Injectable()
 export class ProductCronJobService {
